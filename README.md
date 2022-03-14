@@ -1,1 +1,1 @@
-# Rama de pruebas
+# Aplicación de control de gastos con React.
