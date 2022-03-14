@@ -3,7 +3,13 @@ import ControlPresupuesto from "./ControlPresupuesto";
 
 /* Porqué pasar props presupuesto y setPresupuesto a Header si se puede pasar directo al NuevoPresupuesto? */
 
-const Header = ({presupuesto, setPresupuesto, validarPresupuesto, setValidarPresupuesto}) => {
+const Header = ({
+                    presupuesto, 
+                    setPresupuesto, 
+                    validarPresupuesto, 
+                    setValidarPresupuesto,
+                    gastos
+                }) => {
     return ( 
         <header>
             <h1>Planificador de Gastos</h1>
@@ -14,6 +20,7 @@ const Header = ({presupuesto, setPresupuesto, validarPresupuesto, setValidarPres
                     (
                         <ControlPresupuesto 
                             presupuesto={presupuesto}
+                            gastos={gastos}
                         />
                     )
                 :

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Mensaje from './Mensaje';
 import CerrarBtn from '../img/cerrar.svg';
 
@@ -6,13 +6,27 @@ import CerrarBtn from '../img/cerrar.svg';
     - Agregar botón "regresar" al costado de añadir
 */
 
-const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
+const Modal = ({
+    setModal, 
+    animarModal, 
+    setAnimarModal, 
+    guardarGasto,
+    gastoEditar
+}) => {
 
     const [ mensaje, setMensaje ] = useState('');
 
     const [ conceptogasto, setConceptoGasto ] = useState('');
     const [ monto, setMonto ] = useState(0);
     const [ categoria, setCategoria ] = useState('');
+    
+    useEffect(() => {
+        if(Object.keys(gastoEditar).length) {
+            setConceptoGasto(gastoEditar.conceptogasto);
+            setMonto(gastoEditar.monto);
+            setCategoria(gastoEditar.categoria);
+        }
+    }, [gastoEditar]);
     
 
     const cerrarModal = () => {
@@ -52,7 +66,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
                 className={`formulario ${animarModal ? "animar" : "cerrar"}`}
                 onSubmit={handleSubmit}
             >
-                <legend>Nuevo Gasto</legend>
+                <legend>{gastoEditar.conceptogasto ? "Editar gasto" : "Nuevo Gasto"}</legend>
                 {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
                 <div className="campo">
                     <label htmlFor="conceptogasto">Concepto</label>
@@ -84,7 +98,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
                     >
                         <option value="">--- Seleccione una categoría ---</option>
                         <option value="ahorro">Ahorro</option>
-                        <option value="comida">comida</option>
+                        <option value="comida">Comida</option>
                         <option value="casa">Casa</option>
                         <option value="gastos">Gastos varios</option>
                         <option value="ocio">Ocio</option>
@@ -94,7 +108,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
                 </div>
                 <input 
                     type="submit" 
-                    value="Añadir gasto" 
+                    value={gastoEditar.conceptogasto ? "Editar gasto" : "Añadir Gasto"} 
                 />
             </form>
         </div>
